@@ -16,7 +16,7 @@ namespace BookManagement.Infrastructure.Repositories
         {
             return await _context.Books
                 .Where(b => !b.IsDeleted)
-                .OrderByDescending(b => b.ViewsCount * 0.5 + (DateTime.Now.Year - b.PublicationYear.Year) * 2) // PopularityScore
+                .OrderByDescending(b => b.ViewsCount * 0.5 + (DateTime.Now.Year - b.PublicationYear.Year) * 2) 
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
@@ -68,7 +68,7 @@ namespace BookManagement.Infrastructure.Repositories
             var book = await _context.Books.FirstOrDefaultAsync(b => b.Id == id);
             if (book != null)
             {
-                book.IsDeleted = true;  // Soft delete
+                book.IsDeleted = true; 
                 await _context.SaveChangesAsync();
             }
         }
