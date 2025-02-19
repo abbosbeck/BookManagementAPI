@@ -1,3 +1,4 @@
+using BookManagement.Core.Services;
 using BookManagement.Infrastructure;
 using BookManagement.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,8 @@ builder.Services.AddDbContextPool<AppDbContext>(options
             => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IBookRepository, BookRepository>();
+
+builder.Services.AddScoped<IBookService, BookService>();
 
 var app = builder.Build();
 
