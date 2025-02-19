@@ -33,6 +33,13 @@ namespace BookManagement.Infrastructure.Repositories
                 .ToListAsync();
         }
 
+        public async Task<BookEntity> GetByTitleAsync(string title)
+        {
+            return await _context.Books
+           .Where(b => b.Title == title && !b.IsDeleted) 
+           .FirstOrDefaultAsync();
+        }
+
         public async Task<BookEntity> GetByIdAsync(int id)
         {
             return await _context.Books.FirstOrDefaultAsync(b => b.Id == id && !b.IsDeleted);

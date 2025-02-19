@@ -6,6 +6,7 @@ namespace BookManagement.Infrastructure.Repositories
     {
         Task<IEnumerable<BookEntity>> GetAllAsync(int page, int pageSize);
         Task<IEnumerable<string>> GetBookTitlesAsync(int page, int pageSize);
+        Task<BookEntity> GetByTitleAsync(string title);
         Task<BookEntity> GetByIdAsync(int id);
         Task AddAsync(BookEntity book);
         Task AddBulkAsync(IEnumerable<BookEntity> books);
