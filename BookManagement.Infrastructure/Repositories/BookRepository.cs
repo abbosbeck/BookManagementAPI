@@ -22,6 +22,14 @@ namespace BookManagement.Infrastructure.Repositories
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<string>> GetBookTitlesAsync()
+        {
+            return await _context.Books
+                .Where(b => !b.IsDeleted)
+                .Select(b => b.Title)
+                .ToListAsync();
+        }
+
         public async Task<IEnumerable<string>> GetBookTitlesAsync(int page, int pageSize)
         {
             return await _context.Books
