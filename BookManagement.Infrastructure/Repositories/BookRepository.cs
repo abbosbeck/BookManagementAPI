@@ -41,6 +41,13 @@ namespace BookManagement.Infrastructure.Repositories
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<BookEntity>> GetByIdsAsync(IEnumerable<int> ids)
+        {
+            return await _context.Books
+                .Where(b => ids.Contains(b.Id) && !b.IsDeleted) // Ignore soft-deleted books
+                .ToListAsync();
+        }
+
         public async Task<BookEntity> GetByTitleAsync(string title)
         {
             return await _context.Books
