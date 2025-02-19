@@ -78,6 +78,12 @@ namespace BookManagement.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public async Task UpdateBulkAsync(IEnumerable<BookEntity> books)
+        {
+            _context.Books.UpdateRange(books);
+            await _context.SaveChangesAsync();
+        }
+
         public async Task DeleteAsync(int id)
         {
             var book = await _context.Books.FirstOrDefaultAsync(b => b.Id == id);
