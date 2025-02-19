@@ -20,7 +20,7 @@ namespace BookManagement.Core.Services
                 throw new Exception("A book with this title already exists.");
 
             var book = (BookEntity)bookViewModel;
-          
+
             await _bookRepository.AddAsync(book);
         }
 
@@ -29,7 +29,7 @@ namespace BookManagement.Core.Services
             if (books == null || !books.Any())
                 throw new ArgumentException("The book list cannot be empty.");
 
-            
+
             var existingTitles = (await _bookRepository
                         .GetBookTitlesAsync()).ToHashSet();
 
@@ -82,7 +82,7 @@ namespace BookManagement.Core.Services
             if (book == null || book.IsDeleted)
                 throw new Exception("Book not found or has been deleted.");
 
-           
+
             book.Title = bookViewModel.Title;
             book.PublicationYear = bookViewModel.PublicationYear;
             book.AuthorName = bookViewModel.AuthorName;
@@ -102,7 +102,7 @@ namespace BookManagement.Core.Services
 
         public async Task SoftDeleteBooksBulkAsync(IEnumerable<int> bookIds)
         {
-            if(bookIds == null || !bookIds.Any())
+            if (bookIds == null || !bookIds.Any())
                 throw new ArgumentException("The book list cannot be empty.");
 
             var books = await _bookRepository.GetByIdsAsync(bookIds);

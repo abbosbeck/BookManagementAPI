@@ -16,7 +16,7 @@ namespace BookManagement.Infrastructure.Repositories
         {
             return await _context.Books
                 .Where(b => !b.IsDeleted)
-                .OrderByDescending(b => b.ViewsCount * 0.5 + (DateTime.Now.Year - b.PublicationYear.Year) * 2) 
+                .OrderByDescending(b => b.ViewsCount * 0.5 + (DateTime.Now.Year - b.PublicationYear.Year) * 2)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
                 .ToListAsync();
@@ -51,7 +51,7 @@ namespace BookManagement.Infrastructure.Repositories
         public async Task<BookEntity> GetByTitleAsync(string title)
         {
             return await _context.Books
-           .Where(b => b.Title == title && !b.IsDeleted) 
+           .Where(b => b.Title == title && !b.IsDeleted)
            .FirstOrDefaultAsync();
         }
 
@@ -89,7 +89,7 @@ namespace BookManagement.Infrastructure.Repositories
             var book = await _context.Books.FirstOrDefaultAsync(b => b.Id == id);
             if (book != null)
             {
-                book.IsDeleted = true; 
+                book.IsDeleted = true;
                 await _context.SaveChangesAsync();
             }
         }
