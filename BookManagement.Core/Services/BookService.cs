@@ -24,7 +24,7 @@ namespace BookManagement.Core.Services
             await _bookRepository.AddAsync(book);
         }
 
-        public async Task<(int AddedCount, List<string> SkippedTitles)> AddBooksBulkAsync(IEnumerable<BookViewModel> books)
+        public async Task<(int addedCount, List<string> skippedTitles)> AddBooksBulkAsync(IEnumerable<BookViewModel> books)
         {
             if (books == null || !books.Any())
                 throw new ArgumentException("The book list cannot be empty.");
