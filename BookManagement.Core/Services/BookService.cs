@@ -107,12 +107,7 @@ namespace BookManagement.Core.Services
             if (bookIds == null || !bookIds.Any())
                 throw new ArgumentException("The book list cannot be empty.");
 
-            var books = await _bookRepository.GetByIdsAsync(bookIds);
-            foreach (var book in books)
-            {
-                book.IsDeleted = true;
-            }
-            await _bookRepository.UpdateBulkAsync(books);
+            await _bookRepository.DeleteBulkAsync(bookIds);
         }
     }
 
