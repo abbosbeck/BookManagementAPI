@@ -24,7 +24,6 @@ namespace BookManagement.API.Controllers
         }
 
         // GET: api/books/{id}
-        // Retrieves full details of a book, increments view count, and computes popularity score on the fly.
         [HttpGet("{id}")]
         public async Task<IActionResult> GetBookDetails(int id)
         {
@@ -44,7 +43,6 @@ namespace BookManagement.API.Controllers
         }
 
         // POST: api/books
-        // Adds a single book.
         [HttpPost]
         public async Task<IActionResult> AddBook([FromBody] BookViewModel bookViewModel)
         {
@@ -64,7 +62,6 @@ namespace BookManagement.API.Controllers
         }
 
         // POST: api/books/bulk-add
-        // Adds multiple books and returns the count added and skipped duplicate titles.
         [HttpPost("bulk-add")]
         public async Task<IActionResult> AddBooksBulk([FromBody] IEnumerable<BookViewModel> books)
         {
@@ -85,7 +82,6 @@ namespace BookManagement.API.Controllers
         }
 
         // PUT: api/books/{id}
-        // Updates an existing book.
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateBook(int id, [FromBody] BookViewModel bookViewModel)
         {
@@ -104,7 +100,6 @@ namespace BookManagement.API.Controllers
         }
 
         // DELETE: api/books/{id}
-        // Soft deletes a single book.
         [HttpDelete("{id}")]
         public async Task<IActionResult> SoftDeleteBook(int id)
         {
@@ -120,7 +115,6 @@ namespace BookManagement.API.Controllers
         }
 
         // DELETE: api/books/bulk-delete
-        // Soft deletes multiple books based on provided IDs.
         [HttpDelete("bulk-delete")]
         public async Task<IActionResult> SoftDeleteBooksBulk([FromBody] IEnumerable<int> bookIds)
         {
