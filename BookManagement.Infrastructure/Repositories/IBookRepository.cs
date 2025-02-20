@@ -12,6 +12,6 @@ namespace BookManagement.Infrastructure.Repositories
         Task<int> AddAsync(BookEntity book);
         Task AddBulkAsync(IEnumerable<BookEntity> books);
         Task UpdateAsync(BookEntity book);
-        Task UpdateBulkAsync(IEnumerable<BookEntity> books);
+        Task SoftDeleteBulkAsync(IEnumerable<int> books);
     }
 }
