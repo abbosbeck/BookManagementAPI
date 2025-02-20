@@ -13,7 +13,7 @@ namespace BookManagement.Core.Services
             _bookRepository = bookRepository;
         }
 
-        public async Task AddBookAsync(BookViewModel bookViewModel)
+        public async Task<int> AddBookAsync(BookViewModel bookViewModel)
         {
             var existingBook = await _bookRepository.GetByTitleAsync(bookViewModel.Title);
             if (existingBook != null)
@@ -21,7 +21,9 @@ namespace BookManagement.Core.Services
 
             var book = (BookEntity)bookViewModel;
 
-            await _bookRepository.AddAsync(book);
+            int bookId = await _bookRepository.AddAsync(book);
+
+            return bookId;
         }
 
         public async Task<(int addedCount, List<string> skippedTitles)> AddBooksBulkAsync(IEnumerable<BookViewModel> books)
