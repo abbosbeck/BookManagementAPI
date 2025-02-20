@@ -112,9 +112,13 @@ namespace BookManagement.API.Controllers
                 await _bookService.SoftDeleteBookAsync(id);
                 return NoContent();
             }
+            catch (KeyNotFoundException)
+            {
+                return NotFound(new { Message = "Book not found." });
+            }
             catch (Exception ex)
             {
-                return BadRequest(new { error = ex.Message });
+                return StatusCode(500, new { error = ex.Message });
             }
         }
 
