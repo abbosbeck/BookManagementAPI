@@ -1,6 +1,5 @@
 ﻿using BookManagement.Core.Services;
 using BookManagement.Core.ViewModels;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookManagement.API.Controllers
