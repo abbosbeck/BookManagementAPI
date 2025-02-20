@@ -75,22 +75,5 @@ namespace BookManagement.Infrastructure.Repositories
             _context.Books.UpdateRange(books);
             await _context.SaveChangesAsync();
         }
-
-        public async Task DeleteAsync(int id)
-        {
-            var book = await _context.Books.FirstOrDefaultAsync(b => b.Id == id);
-            if (book != null)
-            {
-                book.IsDeleted = true;
-                await _context.SaveChangesAsync();
-            }
-        }
-
-        public async Task DeleteBulkAsync(IEnumerable<int> ids)
-        {
-            var books = await _context.Books.Where(b => ids.Contains(b.Id)).ToListAsync();
-            foreach (var book in books) book.IsDeleted = true;
-            await _context.SaveChangesAsync();
-        }
     }
 }
