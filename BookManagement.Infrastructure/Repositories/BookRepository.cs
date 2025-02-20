@@ -60,10 +60,12 @@ namespace BookManagement.Infrastructure.Repositories
             return await _context.Books.FirstOrDefaultAsync(b => b.Id == id && !b.IsDeleted);
         }
 
-        public async Task AddAsync(BookEntity book)
+        public async Task<int> AddAsync(BookEntity book)
         {
             await _context.Books.AddAsync(book);
             await _context.SaveChangesAsync();
+
+            return book.Id;
         }
 
         public async Task AddBulkAsync(IEnumerable<BookEntity> books)
