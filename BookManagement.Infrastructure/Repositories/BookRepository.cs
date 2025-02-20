@@ -70,10 +70,11 @@ namespace BookManagement.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateBulkAsync(IEnumerable<BookEntity> books)
+        public async Task SoftDeleteBulkAsync(IEnumerable<int> bookIds)
         {
-            _context.Books.UpdateRange(books);
-            await _context.SaveChangesAsync();
+            await _context.Books
+                .Where(b => bookIds.Contains(b.Id))
+                .ExecuteUpdateAsync(setters => setters.SetProperty(b => b.IsDeleted, true));
         }
     }
 }
