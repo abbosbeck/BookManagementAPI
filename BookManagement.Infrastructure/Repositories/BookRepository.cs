@@ -12,20 +12,11 @@ namespace BookManagement.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<BookEntity>> GetAllAsync(int page, int pageSize)
-        {
-            return await _context.Books
-                .Where(b => !b.IsDeleted)
-                .OrderByDescending(b => b.ViewsCount * 0.5 + (DateTime.Now.Year - b.PublicationYear.Year) * 2)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .ToListAsync();
-        }
-
         public async Task<IEnumerable<string>> GetBookTitlesAsync()
         {
             return await _context.Books
                 .Where(b => !b.IsDeleted)
+                .OrderByDescending(b => b.ViewsCount * 0.5 + (DateTime.Now.Year - b.PublicationYear.Year) * 2)
                 .Select(b => b.Title)
                 .ToListAsync();
         }
