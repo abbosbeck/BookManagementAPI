@@ -16,6 +16,7 @@ namespace BookManagement.Infrastructure.Repositories
         {
             return await _context.Books
                 .Where(b => !b.IsDeleted)
+                .OrderByDescending(b => b.ViewsCount * 0.5 + (DateTime.Now.Year - b.PublicationYear.Year) * 2)
                 .Select(b => b.Title)
                 .ToListAsync();
         }
