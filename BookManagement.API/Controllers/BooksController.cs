@@ -95,7 +95,7 @@ namespace BookManagement.API.Controllers
             }
             catch (KeyNotFoundException)
             {
-                return NotFound(new { Message = "Book not found."});
+                return NotFound(new { Message = "Book not found." });
             }
             catch (Exception ex)
             {

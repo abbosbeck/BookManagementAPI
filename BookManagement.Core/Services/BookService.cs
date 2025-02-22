@@ -1,7 +1,6 @@
 ﻿using BookManagement.Core.ViewModels;
 using BookManagement.Infrastructure;
 using BookManagement.Infrastructure.Entities;
-using BookManagement.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookManagement.Core.Services
@@ -23,7 +22,7 @@ namespace BookManagement.Core.Services
 
             var existingBook = _context.Books
                 .Where(b => b.Title == bookViewModel.Title);
-            
+
             if (existingBook == null)
                 throw new Exception("A book with this title already exists.");
 
@@ -41,7 +40,7 @@ namespace BookManagement.Core.Services
                 throw new ArgumentException("The book list cannot be empty.");
 
 
-            var existingTitles = 
+            var existingTitles =
                 (await _context.Books
                     .Select(b => b.Title)
                     .ToListAsync()).ToHashSet();
@@ -88,7 +87,7 @@ namespace BookManagement.Core.Services
         public async Task<BookViewModel> GetBookDetailsAsync(int id)
         {
             var book = await _context.Books.FirstOrDefaultAsync(b => b.Id == id);
-            
+
             if (book == null || book.IsDeleted)
                 throw new Exception("Book not found or has been deleted.");
 
@@ -103,7 +102,7 @@ namespace BookManagement.Core.Services
         {
             var book = await _context.Books
                     .FirstOrDefaultAsync(b => b.Id == id);
-            
+
             if (book == null || book.IsDeleted)
                 throw new Exception("Book not found or has been deleted.");
 
@@ -112,14 +111,14 @@ namespace BookManagement.Core.Services
             book.PublicationYear = bookViewModel.PublicationYear;
 
             _context.Books.Update(book);
-            await _context.SaveChangesAsync();;
+            await _context.SaveChangesAsync(); ;
         }
 
         public async Task SoftDeleteBookAsync(int id)
         {
             var book = await _context.Books
                 .FirstOrDefaultAsync(b => b.Id == id);
-            
+
             if (book == null)
                 throw new Exception("Book not found.");
 
