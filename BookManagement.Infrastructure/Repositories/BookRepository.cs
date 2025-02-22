@@ -15,7 +15,6 @@ namespace BookManagement.Infrastructure.Repositories
         public async Task<IEnumerable<string>> GetBookTitlesAsync()
         {
             return await _context.Books
-                .Where(b => !b.IsDeleted)
                 .Select(b => b.Title)
                 .ToListAsync();
         }
@@ -23,7 +22,6 @@ namespace BookManagement.Infrastructure.Repositories
         public async Task<IEnumerable<string>> GetBookTitlesAsync(int page, int pageSize)
         {
             return await _context.Books
-                .Where(b => !b.IsDeleted)
                 .OrderByDescending(b => b.ViewsCount * 0.5 + (DateTime.Now.Year - b.PublicationYear.Year) * 2)
                 .Skip((page - 1) * pageSize)
                 .Take(pageSize)
@@ -34,20 +32,20 @@ namespace BookManagement.Infrastructure.Repositories
         public async Task<IEnumerable<BookEntity>> GetByIdsAsync(IEnumerable<int> ids)
         {
             return await _context.Books
-                .Where(b => ids.Contains(b.Id) && !b.IsDeleted) // Ignore soft-deleted books
+                .Where(b => ids.Contains(b.Id))
                 .ToListAsync();
         }
 
         public async Task<BookEntity> GetByTitleAsync(string title)
         {
             return await _context.Books
-           .Where(b => b.Title == title && !b.IsDeleted)
+           .Where(b => b.Title == title)
            .FirstOrDefaultAsync();
         }
 
         public async Task<BookEntity> GetByIdAsync(int id)
         {
-            return await _context.Books.FirstOrDefaultAsync(b => b.Id == id && !b.IsDeleted);
+            return await _context.Books.FirstOrDefaultAsync(b => b.Id == id);
         }
 
         public async Task<int> AddAsync(BookEntity book)
