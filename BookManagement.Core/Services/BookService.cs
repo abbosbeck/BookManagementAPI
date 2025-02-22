@@ -89,6 +89,8 @@ namespace BookManagement.Core.Services
             book.PublicationYear = bookViewModel.PublicationYear;
             book.AuthorName = bookViewModel.AuthorName;
 
+            book = (BookEntity)bookViewModel;
+
             await _bookRepository.UpdateAsync(book);
         }
 
