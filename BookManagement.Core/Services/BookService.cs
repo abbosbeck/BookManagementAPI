@@ -84,11 +84,6 @@ namespace BookManagement.Core.Services
             if (book == null || book.IsDeleted)
                 throw new Exception("Book not found or has been deleted.");
 
-
-            book.Title = bookViewModel.Title;
-            book.PublicationYear = bookViewModel.PublicationYear;
-            book.AuthorName = bookViewModel.AuthorName;
-
             book = (BookEntity)bookViewModel;
 
             await _bookRepository.UpdateAsync(book);
