@@ -1,29 +1,38 @@
 ﻿using BookManagement.Core.ViewModels;
+using BookManagement.Infrastructure;
 using BookManagement.Infrastructure.Entities;
 using BookManagement.Infrastructure.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookManagement.Core.Services
 {
     public class BookService : IBookService
     {
         private readonly IBookRepository _bookRepository;
+        private readonly AppDbContext _context;
 
-        public BookService(IBookRepository bookRepository)
+        public BookService(IBookRepository bookRepository, AppDbContext context)
         {
             _bookRepository = bookRepository;
+            _context = context;
         }
 
         public async Task<int> AddBookAsync(BookViewModel bookViewModel)
         {
-            var existingBook = await _bookRepository.GetByTitleAsync(bookViewModel.Title);
-            if (existingBook != null)
+            // Validation logic
+
+            var existingBook = _context.Books
+                .Where(b => b.Title == bookViewModel.Title);
+            
+            if (existingBook == null)
                 throw new Exception("A book with this title already exists.");
 
             var book = (BookEntity)bookViewModel;
 
-            int bookId = await _bookRepository.AddAsync(book);
+            var entry = await _context.Books.AddAsync(book);
+            await _context.SaveChangesAsync();
 
-            return bookId;
+            return entry.Entity.Id;
         }
 
         public async Task<(int addedCount, List<string> skippedTitles)> AddBooksBulkAsync(IEnumerable<BookViewModel> books)
@@ -32,8 +41,10 @@ namespace BookManagement.Core.Services
                 throw new ArgumentException("The book list cannot be empty.");
 
 
-            var existingTitles = (await _bookRepository
-                        .GetBookTitlesAsync()).ToHashSet();
+            var existingTitles = 
+                (await _context.Books
+                    .Select(b => b.Title)
+                    .ToListAsync()).ToHashSet();
 
             var newBooks = new List<BookEntity>();
             var skippedTitles = new List<string>();
@@ -42,7 +53,7 @@ namespace BookManagement.Core.Services
             {
                 if (existingTitles.Contains(bookViewModel.Title))
                 {
-                    skippedTitles.Add(bookViewModel.Title); // Track duplicates
+                    skippedTitles.Add(bookViewModel.Title);
                 }
                 else
                 {
@@ -53,7 +64,8 @@ namespace BookManagement.Core.Services
 
             if (newBooks.Any())
             {
-                await _bookRepository.AddBulkAsync(newBooks);
+                await _context.Books.AddRangeAsync((newBooks));
+                await _context.SaveChangesAsync();
             }
 
             return (newBooks.Count, skippedTitles);
@@ -61,42 +73,59 @@ namespace BookManagement.Core.Services
 
         public async Task<IEnumerable<string>> GetBookTitlesAsync(int page, int pageSize)
         {
-            var titles = await _bookRepository.GetBookTitlesAsync(page, pageSize);
+            // Validation logic 
+
+            var titles = await _context.Books
+                            .OrderByDescending(b => b.ViewsCount * 0.5 + (DateTime.Now.Year - b.PublicationYear.Year) * 2)
+                            .Skip((page - 1) * pageSize)
+                            .Take(pageSize)
+                            .Select(b => b.Title)
+                            .ToListAsync();
 
             return titles;
         }
 
         public async Task<BookViewModel> GetBookDetailsAsync(int id)
         {
-            var book = await _bookRepository.GetByIdAsync(id);
+            var book = await _context.Books.FirstOrDefaultAsync(b => b.Id == id);
+            
             if (book == null || book.IsDeleted)
                 throw new Exception("Book not found or has been deleted.");
 
             book.ViewsCount++;
-            await _bookRepository.UpdateAsync(book);
+            var entry = _context.Books.Update(book);
+            await _context.SaveChangesAsync();
 
-            return (BookViewModel)book;
+            return (BookViewModel)entry.Entity;
         }
 
         public async Task UpdateBookAsync(int id, BookViewModel bookViewModel)
         {
-            var book = await _bookRepository.GetByIdAsync(id);
+            var book = await _context.Books
+                    .FirstOrDefaultAsync(b => b.Id == id);
+            
             if (book == null || book.IsDeleted)
                 throw new Exception("Book not found or has been deleted.");
 
-            book = (BookEntity)bookViewModel;
+            book.Title = bookViewModel.Title;
+            book.AuthorName = bookViewModel.AuthorName;
+            book.PublicationYear = bookViewModel.PublicationYear;
 
-            await _bookRepository.UpdateAsync(book);
+            _context.Books.Update(book);
+            await _context.SaveChangesAsync();;
         }
 
         public async Task SoftDeleteBookAsync(int id)
         {
-            var book = await _bookRepository.GetByIdAsync(id);
+            var book = await _context.Books
+                .FirstOrDefaultAsync(b => b.Id == id);
+            
             if (book == null)
                 throw new Exception("Book not found.");
 
             book.IsDeleted = true;
-            await _bookRepository.UpdateAsync(book);
+            _context.Books.Update(book);
+            await _context.SaveChangesAsync();
         }
 
         public async Task SoftDeleteBooksBulkAsync(IEnumerable<int> bookIds)
@@ -104,7 +133,9 @@ namespace BookManagement.Core.Services
             if (bookIds == null || !bookIds.Any())
                 throw new ArgumentException("The book list cannot be empty.");
 
-            await _bookRepository.SoftDeleteBulkAsync(bookIds);
+            await _context.Books
+                .Where(b => bookIds.Contains(b.Id))
+                .ExecuteUpdateAsync(setters => setters.SetProperty(b => b.IsDeleted, true));
         }
     }
 
