@@ -14,7 +14,7 @@ namespace BookManagement.Core.Services
             _context = context;
         }
 
-        public async Task<int> AddBookAsync(BookViewModel bookViewModel)
+        public async Task<int> AddBookAsync(BookViewForAddAndUpdateModel bookViewModel)
         {
             // Validation logic
 
@@ -32,7 +32,7 @@ namespace BookManagement.Core.Services
             return entry.Entity.Id;
         }
 
-        public async Task<(int addedCount, List<string> skippedTitles)> AddBooksBulkAsync(IEnumerable<BookViewModel> books)
+        public async Task<(int addedCount, List<string> skippedTitles)> AddBooksBulkAsync(IEnumerable<BookViewForAddAndUpdateModel> books)
         {
             if (books == null || !books.Any())
                 throw new ArgumentException("The book list cannot be empty.");
@@ -96,7 +96,7 @@ namespace BookManagement.Core.Services
             return (BookViewModel)entry.Entity;
         }
 
-        public async Task UpdateBookAsync(int id, BookViewModel bookViewModel)
+        public async Task UpdateBookAsync(int id, BookViewForAddAndUpdateModel bookViewModel)
         {
             var book = await _context.Books
                     .FirstOrDefaultAsync(b => b.Id == id);

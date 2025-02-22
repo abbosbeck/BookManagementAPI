@@ -44,7 +44,7 @@ namespace BookManagement.API.Controllers
 
         // POST: api/books
         [HttpPost]
-        public async Task<IActionResult> AddBook([FromBody] BookViewModel bookViewModel)
+        public async Task<IActionResult> AddBook([FromBody] BookViewForAddAndUpdateModel bookViewModel)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -63,7 +63,7 @@ namespace BookManagement.API.Controllers
 
         // POST: api/books/bulk-add
         [HttpPost("bulk-add")]
-        public async Task<IActionResult> AddBooksBulk([FromBody] IEnumerable<BookViewModel> books)
+        public async Task<IActionResult> AddBooksBulk([FromBody] IEnumerable<BookViewForAddAndUpdateModel> books)
         {
             try
             {
@@ -83,7 +83,7 @@ namespace BookManagement.API.Controllers
 
         // PUT: api/books/{id}
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateBook(int id, [FromBody] BookViewModel bookViewModel)
+        public async Task<IActionResult> UpdateBook(int id, [FromBody] BookViewForAddAndUpdateModel bookViewModel)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
