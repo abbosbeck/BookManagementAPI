@@ -26,7 +26,6 @@ namespace BookManagement.Core.ViewModels
         {
             return new BookEntity
             {
-                Id = bookViewModel.Id,
                 Title = bookViewModel.Title,
                 PublicationYear = bookViewModel.PublicationYear,
                 AuthorName = bookViewModel.AuthorName
