@@ -7,12 +7,10 @@ namespace BookManagement.Core.Services
 {
     public class BookService : IBookService
     {
-        private readonly IBookRepository _bookRepository;
         private readonly AppDbContext _context;
 
-        public BookService(IBookRepository bookRepository, AppDbContext context)
+        public BookService(AppDbContext context)
         {
-            _bookRepository = bookRepository;
             _context = context;
         }
 
