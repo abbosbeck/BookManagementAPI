@@ -1,6 +1,6 @@
 ﻿namespace BookManagement.Infrastructure.Entities
 {
-    public class BookEntity
+    public class BookEntity : ISoftDeletable
     {
         public int Id { get; set; }
         public string Title { get; set; }
