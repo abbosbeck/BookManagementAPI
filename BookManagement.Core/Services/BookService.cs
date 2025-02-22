@@ -107,7 +107,6 @@ namespace BookManagement.Core.Services
             if (book == null || book.IsDeleted)
                 throw new Exception("Book not found or has been deleted.");
 
-
             book.Title = bookViewModel.Title;
             book.AuthorName = bookViewModel.AuthorName;
             book.PublicationYear = bookViewModel.PublicationYear;

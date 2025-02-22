@@ -12,5 +12,4 @@ It supports CRUD operations, tracks the number of times a book is viewed, and ca
 2. Update the connection string in appsettings.json
 3. Run migrations:
    ```bash
-   dotnet ef migrations add InitialCreate
    dotnet ef database update
