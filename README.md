@@ -13,6 +13,6 @@ It supports CRUD operations, tracks the number of times a book is viewed, and ca
 3. Run migrations:
    ```bash
    dotnet ef database update
-
-   ##Disclaimer:
+   ```
+## Disclaimer:
 This application implements JWT-based authentication, but it is not enforced at the endpoint level. Certain aspects could be improved—for example, storing users in a database instead of hard-coding them. However, given that authentication was an optional requirement and the deadline is approaching, the current implementation was chosen.
