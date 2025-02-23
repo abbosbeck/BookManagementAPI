@@ -1,11 +1,13 @@
 ﻿using BookManagement.Core.Services;
 using BookManagement.Core.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookManagement.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class BooksController : ControllerBase
     {
         private readonly IBookService _bookService;
@@ -129,7 +131,7 @@ namespace BookManagement.API.Controllers
             try
             {
                 await _bookService.SoftDeleteBooksBulkAsync(bookIds);
-              
+
                 return NoContent();
             }
             catch (KeyNotFoundException)
