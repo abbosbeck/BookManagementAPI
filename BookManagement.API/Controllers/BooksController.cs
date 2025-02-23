@@ -131,7 +131,7 @@ namespace BookManagement.API.Controllers
             try
             {
                 await _bookService.SoftDeleteBooksBulkAsync(bookIds);
-              
+
                 return NoContent();
             }
             catch (KeyNotFoundException)

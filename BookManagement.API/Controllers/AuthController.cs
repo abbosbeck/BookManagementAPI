@@ -22,7 +22,7 @@ namespace BookManagement.API.Controllers
             if (request.Username == "admin" && request.Password == "password")
             {
                 var token = _tokenService.GenerateToken(request.Username);
-                
+
                 return Ok(new { Token = token });
             }
 
