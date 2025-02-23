@@ -1,4 +1,5 @@
 ﻿using BookManagement.Core.Services.AuthService;
+using BookManagement.Core.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookManagement.API.Controllers
@@ -16,7 +17,7 @@ namespace BookManagement.API.Controllers
         }
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginRequest request)
+        public IActionResult Login([FromBody] LoginRequestViewModel request)
         {
             if (request.Username == "admin" && request.Password == "password")
             {
@@ -27,11 +28,5 @@ namespace BookManagement.API.Controllers
 
             return Unauthorized();
         }
-    }
-
-    public class LoginRequest
-    {
-        public string Username { get; set; }
-        public string Password { get; set; }
     }
 }
