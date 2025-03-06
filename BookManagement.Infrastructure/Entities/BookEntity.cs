@@ -7,6 +7,5 @@
         public DateTime PublicationYear { get; set; }
         public string AuthorName { get; set; }
         public int ViewsCount { get; set; }
-        public bool IsDeleted { get; set; }
     }
 }
