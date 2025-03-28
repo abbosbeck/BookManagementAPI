@@ -13,8 +13,8 @@ jobs:
     - name: Setup .NET 8 SDK
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: '8.0.x'
+        dotnet-version: 8.x
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore ./BookManagement.API/BookManagement.API.csproj
     - name: Build
       run: dotnet build --configuration Release
