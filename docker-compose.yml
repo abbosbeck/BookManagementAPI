@@ -1,0 +1,6 @@
+services:
+  bookmanagement.api:
+    image: ${DOCKER_REGISTRY-}bookmanagementapi
+    build:
+      context: .
+      dockerfile: BookManagement.API/Dockerfile
