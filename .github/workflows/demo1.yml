@@ -14,3 +14,5 @@ jobs:
     if: ${{ always() }} #This will make your workflow2 executed even if workflow1 fails, remove this, if you want to run this only on success of workflow1
     needs: call-workflow1
     uses: ./.github/workflows/workflow2.yml
+  call-main:
+    uses: ./.github/workflows/main.yml
