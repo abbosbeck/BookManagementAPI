@@ -1,31 +1,25 @@
-# This workflow will build a .NET project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
-
 name: Build, Test, and Publish
 
-on:
-  push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
-  workflow_dispatch:
-  workflow_call:
-    
+on: [push, pull_request]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 8.0.x
-    - name: Restore dependencies
-      run: dotnet restore
+        dotnet-version: '8.0.x'
+
+    - name: Install dependencies
+      run: dotnet restore BookManagement.API/BookManagement.API.csproj
+
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build BookManagement.API/BookManagement.API.csproj --configuration Release --no-restore
+
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test BookManagement.API/BookManagement.API.csproj --no-build --verbosity normal
