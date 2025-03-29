@@ -1,13 +1,19 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35806.99 d17.13
+VisualStudioVersion = 17.13.35806.99
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookManagement.API", "BookManagement.API\BookManagement.API.csproj", "{CAA27766-ABE2-4475-8B6C-5DE645C90645}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookManagement.Core", "BookManagement.Core\BookManagement.Core.csproj", "{9FB18DF5-7C7D-4899-9E7D-613D558CFE1C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookManagement.Infrastructure", "BookManagement.Infrastructure\BookManagement.Infrastructure.csproj", "{533C4D9C-30B2-4470-A76D-C8569E26F524}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit.Tests", "Unit.Tests", "{0AA92A29-AB8A-4632-9DEC-BA706A90D81D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Unit", "Tests.Unit\Tests.Unit.csproj", "{D5B4EBC2-BB22-4EC5-B09D-58D8490A6BAC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,9 +33,17 @@ Global
 		{533C4D9C-30B2-4470-A76D-C8569E26F524}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{533C4D9C-30B2-4470-A76D-C8569E26F524}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{533C4D9C-30B2-4470-A76D-C8569E26F524}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5B4EBC2-BB22-4EC5-B09D-58D8490A6BAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5B4EBC2-BB22-4EC5-B09D-58D8490A6BAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5B4EBC2-BB22-4EC5-B09D-58D8490A6BAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5B4EBC2-BB22-4EC5-B09D-58D8490A6BAC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0AA92A29-AB8A-4632-9DEC-BA706A90D81D} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{D5B4EBC2-BB22-4EC5-B09D-58D8490A6BAC} = {0AA92A29-AB8A-4632-9DEC-BA706A90D81D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9B4FF219-A8DD-4317-B251-A170E8F8CACC}
