@@ -15,4 +15,5 @@ jobs:
     needs: call-workflow1
     uses: ./.github/workflows/workflow2.yml
   call-main:
+    needs: call-workflow2
     uses: ./.github/workflows/main.yml
