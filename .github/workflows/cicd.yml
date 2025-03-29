@@ -1,22 +1,22 @@
-name: Deploy 🚀
-
+name: Build & Test
 on:
-  workflow_dispatch:
-  push:
+  pull_request:
     branches:
-      - main
-
+    - master
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
-      - name: 🛠️ Checkout Repository
-        uses: actions/checkout@v4
-      - name: ⚙️ Setup .NET 9 SDK
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: 9.x
-      - name: 📦 Restore Dependencies
-        run: dotnet restore BookManagementAPI.sln
-      - name: 🏗️ Build Project
-        run: dotnet build --no-restore
+    - name: Check out
+      uses: actions/checkout@v2
+    - name: Setup .Net
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 8.0.x
+        include-prerelease: true
+    - name: Restore
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
